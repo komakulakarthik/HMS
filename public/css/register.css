@@ -1,0 +1,53 @@
+/* Registration page styles (same as login page) */
+.login-container {
+    width: 100%;
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 40px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+#register-form {
+    display: flex;
+    flex-direction: column;
+}
+
+#register-form label {
+    margin-bottom: 5px;
+    text-align: left;
+}
+
+#register-form input, #register-form select {
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+}
+
+/* Dropdown styling */
+#register-form select {
+    appearance: none;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+#register-form button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+#register-form button:hover {
+    background-color: #45a049;
+}
+
+#register p {
+    margin-top: 20px;
+}

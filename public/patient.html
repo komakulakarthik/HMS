@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Home - Hospital Connect</title>
+    <link rel="stylesheet" href="/public/css/patient.css">
+    <script defer src="/patient.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Hospital Connect - Patient Home</h1>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="/public/patient.html">Home</a></li>
+                    <li><a href="dashboard.html">Dashboard</a></li>
+                    <li><a href="/public/patient-profile.html">Profile</a></li>
+                    <li><a href="logout.html">Logout</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <section id="patient-home" class="main-section">
+            <h2>Select Hospital and Doctor</h2>
+            <form id="appointment-form">
+                <label for="hospital">Select Hospital:</label>
+                <select id="hospital" name="hospital" required>
+                    <option value="" disabled selected>Select a hospital</option>
+                    <option value="hospital1">City Hospital</option>
+                    <option value="hospital2">Community Health Center</option>
+                    <option value="hospital3">General Hospital</option>
+                </select>
+
+                <label for="doctor">Select Doctor:</label>
+                <select id="doctor" name="doctor" required>
+                    <option value="" disabled selected>Select a doctor</option>
+                    <!-- Options will be populated based on hospital selection -->
+                </select>
+
+                <label for="appointment-date">Select Appointment Date:</label>
+                <input type="date" id="appointment-date" name="appointment-date" required>
+
+                <button type="submit">Book Appointment</button>
+            </form>
+
+            <p id="confirmation-message" style="display: none;"></p>
+        </section>
+
+        <footer>
+            <p>&copy; 2024 Hospital Connect. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>

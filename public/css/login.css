@@ -1,0 +1,53 @@
+/* Login page styles */
+.login-container {
+    width: 100%;
+    max-width: 400px; /* Set a reasonable max-width for the login form */
+    margin: 50px auto; /* Center the form in the middle */
+    padding: 40px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+#login-form {
+    display: flex;
+    flex-direction: column;
+}
+
+#login-form label {
+    margin-bottom: 5px;
+    text-align: left;
+}
+
+#login-form input, #login-form select {
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+}
+
+/* Dropdown Styling */
+#login-form select {
+    appearance: none; /* Removes default styling */
+    background-color: #fff;
+    cursor: pointer;
+}
+
+#login-form button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+#login-form button:hover {
+    background-color: #45a049;
+}
+
+#login p {
+    margin-top: 20px;
+}
