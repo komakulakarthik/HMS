@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Doctor Home - Hospital Connect</title>
-    <link rel="stylesheet" href="/public/css/doctor.css"> <!-- Link to CSS -->
+    <title>Doctor Appointments - Hospital Connect</title>
+    <link rel="stylesheet" href="/public/css/doctor-app.css"> <!-- Link to CSS -->
+    <script defer src="/public/js/doctor-app.js"></script> <!-- Link to JavaScript -->
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>Welcome, Doctor!</h1>
+            <h1>Doctor's Appointments</h1>
             <nav>
                 <ul class="nav-menu">
                     <li><a href="/public/doctor.html">Home</a></li>
@@ -22,20 +23,20 @@
         </header>
 
         <section class="main-section">
-            <h2>Doctor Dashboard</h2>
-            <div class="dashboard-container">
-                <div class="dashboard-item">
-                    <h3>View Appointments</h3>
-                    <p>Manage and view all upcoming patient appointments.</p>
-                    <a href="/public/doctor-app.html" class="btn">Manage Appointments</a>
-                </div>
-
-                <div class="dashboard-item">
-                    <h3>Patient Records</h3>
-                    <p>View and manage patient medical histories and records.</p>
-                    <a href="/public/doctor-patient-rec.html" class="btn">View Patient Records</a>
-                </div>
-            </div>
+            <h2>Your Upcoming Appointments</h2>
+            <table id="appointments-table">
+                <thead>
+                    <tr>
+                        <th>Patient Name</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Reason for Visit</th>
+                    </tr>
+                </thead>
+                <tbody id="appointments-list">
+                    <!-- Dynamic content will be inserted here by JavaScript -->
+                </tbody>
+            </table>
         </section>
 
         <footer>
