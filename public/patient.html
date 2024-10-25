@@ -37,9 +37,12 @@
                     <option value="" disabled selected>Select a doctor</option>
                     <!-- Options will be populated based on hospital selection -->
                 </select>
-
+                <label for="reasonforappointment">Reason-for-Appointment:</label>
+                <input type="text" id="reasonforappointment" name="reason-for-appointment" required>
                 <label for="appointment-date">Select Appointment Date:</label>
                 <input type="date" id="appointment-date" name="appointment-date" required>
+                <label for="appointment-time">Select Appointment time:</label>
+                <input type="time" id="appointment-time" name="appointment-time" required>
 
                 <button type="submit">Book Appointment</button>
             </form>

@@ -44,10 +44,11 @@ document.addEventListener('DOMContentLoaded', function () {
         const selectedHospital = hospitalSelect.options[hospitalSelect.selectedIndex].text;
         const selectedDoctor = doctorSelect.value;
         const appointmentDate = document.getElementById('appointment-date').value;
+        const appointmenttime = document.getElementById('appointment-time').value;
 
         // Show confirmation message
         confirmationMessage.style.display = 'block';
-        confirmationMessage.textContent = `Appointment booked with ${selectedDoctor} at ${selectedHospital} on ${appointmentDate}.`;
+        confirmationMessage.textContent = `Appointment booked with ${selectedDoctor} at ${selectedHospital} on ${appointmentDate} at ${appointmenttime}.`;
     });
 });
 

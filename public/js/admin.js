@@ -17,19 +17,29 @@ document.addEventListener('DOMContentLoaded', function () {
     // Populate the hospitals list
     function populateHospitals() {
         hospitalsList.innerHTML = '';
-        hospitals.forEach(hospital => {
+        hospitals.forEach((hospital, index) => {
             const row = document.createElement('tr');
-            row.innerHTML = `<td>${hospital.name}</td><td>${hospital.location}</td>`;
+            row.innerHTML = `
+                <td>${hospital.name}</td>
+                <td>${hospital.location}</td>
+                <td><button onclick="deleteHospital(${index})">Delete</button></td>
+            `;
             hospitalsList.appendChild(row);
         });
+        populateHospitalSelect(); // Update hospital select dropdown
     }
 
     // Populate the doctors list
     function populateDoctors() {
         doctorsList.innerHTML = '';
-        doctors.forEach(doctor => {
+        doctors.forEach((doctor, index) => {
             const row = document.createElement('tr');
-            row.innerHTML = `<td>${doctor.name}</td><td>${doctor.specialization}</td><td>${doctor.hospital}</td>`;
+            row.innerHTML = `
+                <td>${doctor.name}</td>
+                <td>${doctor.specialization}</td>
+                <td>${doctor.hospital}</td>
+                <td><button onclick="deleteDoctor(${index})">Delete</button></td>
+            `;
             doctorsList.appendChild(row);
         });
     }
@@ -45,6 +55,18 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    // Delete hospital
+    window.deleteHospital = function (index) {
+        hospitals.splice(index, 1); // Remove hospital from array
+        populateHospitals(); // Re-render hospital list
+    };
+
+    // Delete doctor
+    window.deleteDoctor = function (index) {
+        doctors.splice(index, 1); // Remove doctor from array
+        populateDoctors(); // Re-render doctor list
+    };
+
     // Event listener for adding a new hospital
     document.getElementById('add-hospital-form').addEventListener('submit', function (e) {
         e.preventDefault();
@@ -53,7 +75,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
         hospitals.push({ name: hospitalName, location: location });
         populateHospitals();
-        populateHospitalSelect();
 
         alert('Hospital added successfully!');
         e.target.reset();
@@ -76,5 +97,4 @@ document.addEventListener('DOMContentLoaded', function () {
     // Initial population of data
     populateHospitals();
     populateDoctors();
-    populateHospitalSelect();
 });
