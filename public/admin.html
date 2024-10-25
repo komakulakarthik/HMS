@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Hospital Connect</title>
+    <link rel="stylesheet" href="/public/css/admin.css"> <!-- Link to CSS -->
+    <script defer src="/public/js/admin.js"></script> <!-- Link to JavaScript -->
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Admin Dashboard</h1>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="/public/admin.html">Dashboard</a></li>
+                    <li><a href="logout.html">Logout</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <section class="main-section">
+            <h2>Hospitals and Doctors Management</h2>
+
+            <!-- Hospitals List -->
+            <div class="section">
+                <h3>List of Hospitals</h3>
+                <table id="hospitals-table">
+                    <thead>
+                        <tr>
+                            <th>Hospital Name</th>
+                            <th>Location</th>
+                        </tr>
+                    </thead>
+                    <tbody id="hospitals-list">
+                        <!-- Dynamic content populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Doctors List -->
+            <div class="section">
+                <h3>List of Doctors</h3>
+                <table id="doctors-table">
+                    <thead>
+                        <tr>
+                            <th>Doctor Name</th>
+                            <th>Specialization</th>
+                            <th>Hospital</th>
+                        </tr>
+                    </thead>
+                    <tbody id="doctors-list">
+                        <!-- Dynamic content populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Add Hospital Form -->
+            <div class="section">
+                <h3>Add New Hospital</h3>
+                <form id="add-hospital-form">
+                    <div class="form-group">
+                        <label for="hospital-name">Hospital Name:</label>
+                        <input type="text" id="hospital-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="location">Location:</label>
+                        <input type="text" id="location" required>
+                    </div>
+                    <button type="submit">Add Hospital</button>
+                </form>
+            </div>
+
+            <!-- Add Doctor Form -->
+            <div class="section">
+                <h3>Add Doctor</h3>
+                <form id="add-doctor-form">
+                    <div class="form-group">
+                        <label for="doctor-name">Doctor Name:</label>
+                        <input type="text" id="doctor-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="specialization">Specialization:</label>
+                        <input type="text" id="specialization" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="hospital-select">Hospital:</label>
+                        <select id="hospital-select" required>
+                            <option value="">Select Hospital</option>
+                            <!-- Options populated by JavaScript -->
+                        </select>
+                    </div>
+                    <button type="submit">Add Doctor</button>
+                </form>
+            </div>
+        </section>
+
+        <footer>
+            <p>&copy; 2024 Hospital Connect. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>
