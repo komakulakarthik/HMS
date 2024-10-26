@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register - Patient</title>
-    <link rel="stylesheet" href="/public/css/register.css">
-    <script defer src="/public/js/register.js"></script>
+    <link rel="stylesheet" href="/css/register.css">
+    <script defer src="/js/register.js"></script>
 </head>
 <body>
     <div class="container login-container">
@@ -14,35 +14,40 @@
         </header>
 
         <section id="register">
-            <form id="register-form" action="patient-dashboard.html" method="POST">
-                <label for="fullname">Full Name:</label>
-                <input type="text" id="fullname" name="fullname" required>
+            <!-- registration.html -->
+<form id="register-form" action="/api/patients/register" method="POST">
+    <label for="fullname">Full Name:</label>
+    <input type="text" id="fullname" name="name" required> <!-- Changed 'fullname' to 'name' -->
 
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
 
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required minlength="6">
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required minlength="6">
 
-                <label for="confirm-password">Confirm Password:</label>
-                <input type="password" id="confirm-password" name="confirm-password" required>
+    <label for="confirm-password">Confirm Password:</label>
+    <input type="password" id="confirm-password" name="confirm-password" required>
 
-                <label for="age">Age:</label>
-                <input type="number" id="age" name="age" required>
+    <label for="age">Age:</label>
+    <input type="number" id="age" name="age" required>
 
-                <label for="gender">Gender:</label>
-                <select id="gender" name="gender" required>
-                    <option value="" disabled selected>Select your gender</option>
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                    <option value="other">Other</option>
-                </select>
+    <label for="gender">Gender:</label>
+    <select id="gender" name="gender" required>
+        <option value="" disabled selected>Select your gender</option>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+        <option value="other">Other</option>
+    </select>
 
-                <label for="phone">Phone Number:</label>
-                <input type="tel" id="phone" name="phone" required pattern="\d{10}" placeholder="Enter 10 digit phone number">
+    <label for="phone">Phone Number:</label>
+    <input type="tel" id="phone" name="phone" required pattern="\d{10}" placeholder="Enter 10 digit phone number">
 
-                <button type="submit">Register</button>
-            </form>
+    <label for="address">Address:</label>
+    <input type="text" id="address" name="address" required> <!-- Add address field -->
+
+    <button type="submit">Register</button>
+</form>
+
             <p>Already have an account? <a href="login.html">Login here</a>.</p>
         </section>
 

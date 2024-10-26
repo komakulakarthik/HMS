@@ -4,8 +4,12 @@ document.addEventListener('DOMContentLoaded', function () {
     const confirmPasswordInput = document.getElementById('confirm-password');
     const phoneInput = document.getElementById('phone');
     const emailInput = document.getElementById('email');
+    const fullnameInput = document.getElementById('fullname');
+    const ageInput = document.getElementById('age');
+    const genderInput = document.getElementById('gender');
+    const addressInput = document.getElementById('address');
 
-    registerForm.addEventListener('submit', function (event) {
+    registerForm.addEventListener('submit', async function (event) {
         let isValid = true; // Flag to check overall form validity
 
         // Check if passwords match
@@ -32,6 +36,39 @@ document.addEventListener('DOMContentLoaded', function () {
         // Prevent form submission if any validation fails
         if (!isValid) {
             event.preventDefault();
+            return; // Stop further execution
+        }
+
+        // Gather data to send
+        const formData = {
+            name: fullnameInput.value,
+            email: emailInput.value,
+            password: passwordInput.value, // Make sure to hash this on the server
+            age: ageInput.value,
+            gender: genderInput.value,
+            phone: phoneInput.value,
+            address: addressInput.value // Add the address field
+        };
+
+        try {
+            const response = await fetch('/api/patients/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'Registration failed');
+            }
+
+            // Redirect to the login page after successful registration
+            window.location.href = 'login.html';
+
+        } catch (error) {
+            alert(error.message); // Show error message
         }
     });
 });
