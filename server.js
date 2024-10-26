@@ -8,6 +8,7 @@ const app = express();
 
 // Middleware
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true })); // URL-encoded parser
 app.use(express.static('public')); // Serve static files
 
 // Connect to MongoDB using environment variable
@@ -26,6 +27,14 @@ app.use('/api/hospitals', hospitalRoutes);
 app.use('/api/patients', patientRoutes);
 app.use('/api/appointments', appointmentRoutes);
 app.use('/api/auth', authRoutes);
+
+const cors = require('cors');
+
+app.use(cors({
+    origin: 'http://localhost:3000',  // Allow requests from this origin
+    credentials: true,  // If using cookies, set this to true
+}));
+
 
 // Home route
 app.get('/', (req, res) => {

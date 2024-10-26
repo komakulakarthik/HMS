@@ -1,3 +1,4 @@
+// public/js/register.js (client-side JavaScript)
 document.addEventListener('DOMContentLoaded', function () {
     const registerForm = document.getElementById('register-form');
     const passwordInput = document.getElementById('password');
@@ -10,48 +11,52 @@ document.addEventListener('DOMContentLoaded', function () {
     const addressInput = document.getElementById('address');
 
     registerForm.addEventListener('submit', async function (event) {
-        let isValid = true; // Flag to check overall form validity
+        event.preventDefault(); // Prevent default form submission
+
+        let isValid = true;
 
         // Check if passwords match
         if (passwordInput.value !== confirmPasswordInput.value) {
-            isValid = false; // Set flag to false
+            isValid = false;
             alert('Passwords do not match. Please try again.');
         }
 
         // Check if phone number is exactly 10 digits
         const phoneNumber = phoneInput.value.trim();
         if (!/^\d{10}$/.test(phoneNumber)) {
-            isValid = false; // Set flag to false
+            isValid = false;
             alert('Phone number must be exactly 10 digits.');
         }
 
-        // Check if email is valid using regex
+        // Check if email is valid
         const email = emailInput.value.trim();
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Simple regex for email validation
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailPattern.test(email)) {
-            isValid = false; // Set flag to false
+            isValid = false;
             alert('Please enter a valid email address.');
         }
 
-        // Prevent form submission if any validation fails
-        if (!isValid) {
-            event.preventDefault();
-            return; // Stop further execution
+        // Check if address is provided
+        if (!addressInput.value.trim()) {
+            isValid = false;
+            alert('Please enter your address.');
         }
+
+        if (!isValid) return;
 
         // Gather data to send
         const formData = {
             name: fullnameInput.value,
             email: emailInput.value,
-            password: passwordInput.value, // Make sure to hash this on the server
+            password: passwordInput.value,
             age: ageInput.value,
             gender: genderInput.value,
             phone: phoneInput.value,
-            address: addressInput.value // Add the address field
+            address: addressInput.value,
         };
 
         try {
-            const response = await fetch('/api/patients/register', {
+            const response = await fetch('http://localhost:3000/api/patients/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -68,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function () {
             window.location.href = 'login.html';
 
         } catch (error) {
-            alert(error.message); // Show error message
+            alert(error.message || 'An error occurred while registering.');
         }
     });
 });
