@@ -5,42 +5,53 @@
 }
 
 body, html {
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
     line-height: 1.6;
     width: 100%;
     height: 100%;
-    background-color: #f0f0f0;
+    background-color: #f3f4f6;
+    color: #333;
 }
 
 .container {
-    width: 100%; /* Full width of the viewport */
-    min-height: 100vh; /* Full height of the viewport */
-    background-color: white;
-    padding: 20px;
-    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    min-height: 100vh;
+    background-color: #fff;
+    padding: 30px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
 }
 
 header {
-    background: #4CAF50;
+    background: #00796b;
     color: white;
-    padding: 1rem;
+    padding: 1.5rem;
     text-align: center;
+    border-radius: 8px;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
 }
 
 nav ul {
     list-style: none;
     padding: 0;
     text-align: center;
-}
-
-nav ul li {
-    display: inline;
-    margin: 0 10px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
 }
 
 nav ul li a {
     color: white;
     text-decoration: none;
+    padding: 10px 15px;
+    transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+nav ul li a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
 }
 
 section {
@@ -49,36 +60,46 @@ section {
 }
 
 #hospitals .hospital {
-    background-color: #f9f9f9;
+    background-color: #fafafa;
     border: 1px solid #ddd;
-    margin-bottom: 1rem;
-    padding: 1rem;
-    text-align: left;
+    margin-bottom: 1.5rem;
+    padding: 1.5rem;
+    border-radius: 8px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#hospitals .hospital:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 #functions ul {
     list-style: disc;
-    padding-left: 20px;
-    text-align: left;
+    padding-left: 1.5rem;
+    color: #555;
 }
 
 button {
-    background-color: #4CAF50;
+    background-color: #00796b;
     color: white;
     border: none;
-    padding: 10px 20px;
+    padding: 12px 24px;
     cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 button:hover {
-    background-color: #45a049;
+    background-color: #00695c;
+    transform: translateY(-3px);
 }
 
 footer {
     background: #333;
-    color: white;
+    color: #eee;
     text-align: center;
-    padding: 1rem;
+    padding: 1.5rem;
     bottom: 0;
     width: 100%;
+    box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.1);
 }
