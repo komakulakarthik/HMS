@@ -9,17 +9,25 @@ const hospitalSchema = new mongoose.Schema({
     },
     address: {
         type: String,
-        required: true,
+        required: false, // Made optional
     },
     phone: {
         type: String,
-        required: true,
+        required: false, // Made optional
     },
     email: {
         type: String,
-        required: true,
         unique: true,
         trim: true,
+        required: true, // Made optional
+    },
+    admin: { // New field for hospital admin
+        type: String,
+        required: true, // Change as necessary
+    },
+    password: { // New field for admin password
+        type: String,
+        required: true, // Change as necessary
     },
     doctors: [{
         type: mongoose.Schema.Types.ObjectId,

@@ -1,36 +1,32 @@
-// admin.js
+// admin.js (Backend)
 const express = require('express');
 const router = express.Router();
 const Hospital = require('../models/Hospital'); // Ensure you have a Hospital model
 const Doctor = require('../models/Doctor'); // Ensure you have a Doctor model
 
-// Route to add a new hospital
-router.post('/add-hospital', async (req, res) => {
-    const { name, admin, password } = req.body;
-
+// Route to get the list of all hospitals
+router.get('/hospitals', async (req, res) => {
     try {
-        const newHospital = new Hospital({
-            name,
-            admin,
-            password
-        });
-        await newHospital.save();
-        res.status(201).json({ message: 'Hospital added successfully!' });
+        const hospitals = await Hospital.find();
+        res.status(200).json(hospitals);
     } catch (error) {
-        console.error('Error adding hospital:', error);
-        res.status(500).json({ message: 'Error adding hospital. Please try again.' });
+        console.error('Error fetching hospitals:', error);
+        res.status(500).json({ message: 'Error fetching hospitals' });
     }
 });
 
 // Route to add a new hospital
 router.post('/add-hospital', async (req, res) => {
-    const { name, admin, password } = req.body; // Ensure these match your form inputs
+    const { name, admin, email, password } = req.body; // Ensure these match your form inputs
 
     try {
         const newHospital = new Hospital({
             name: name,
             admin: admin,
-            password: password // Consider hashing this password before saving for security
+            email: email,
+            password: password,
+            // Email, phone, and address are optional for now
+            // You can add them later when implementing additional functionality
         });
         await newHospital.save();
         res.status(201).json({ message: 'Hospital added successfully!' });

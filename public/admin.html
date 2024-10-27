@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - Hospital Connect</title>
-    <link rel="stylesheet" href="/public/css/admin.css"> <!-- Link to CSS -->
+    <link rel="stylesheet" href="/css/admin.css"> <!-- Link to CSS -->
     <script defer src="/js/admin.js"></script> <!-- Link to JavaScript -->
 </head>
 <body>
@@ -30,7 +30,7 @@
                     <thead>
                         <tr>
                             <th>Hospital Name</th>
-                            <th>Location</th>
+                            <th>Admin</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -67,41 +67,18 @@
                         <input type="text" id="hospital-name" required>
                     </div>
                     <div class="form-group">
-                        <label for="location">Location:</label>
-                        <input type="text" id="location" required>
+                        <label for="h_admin">Hospital Admin:</label>
+                        <input type="text" id="h_admin" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="h_email">Hospital Email:</label>
+                        <input type="email" id="h_email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="h_password">Admin Password:</label>
+                        <input type="password" id="h_password" required>
                     </div>
                     <button type="submit">Add Hospital</button>
-                </form>
-            </div>
-
-            <!-- Add Doctor Form -->
-            <div class="section">
-                <h3>Add Doctor</h3>
-                <form id="add-doctor-form">
-                    <div class="form-group">
-                        <label for="doctor-name">Doctor Name:</label>
-                        <input type="text" id="doctor-name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="doctor-username">Username:</label>
-                        <input type="text" id="doctor-username" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="doctor-password">Password:</label>
-                        <input type="password" id="doctor-password" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="specialization">Specialization:</label>
-                        <input type="text" id="specialization" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="hospital-select">Hospital:</label>
-                        <select id="hospital-select" required>
-                            <option value="">Select Hospital</option>
-                            <!-- Options populated by JavaScript -->
-                        </select>
-                    </div>
-                    <button type="submit">Add Doctor</button>
                 </form>
             </div>
         </section>
