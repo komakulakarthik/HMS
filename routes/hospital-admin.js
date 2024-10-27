@@ -48,6 +48,9 @@ router.post('/add-doctor', async (req, res) => {
 
         await newUser.save();
 
+         // Update the hospital to include the new doctor's ID
+         await Hospital.findByIdAndUpdate(hospitalId, { $push: { doctors: newDoctor._id } });
+
         res.status(201).json({ message: 'Doctor added successfully!' });
     } catch (error) {
         console.error('Error adding doctor:', error);

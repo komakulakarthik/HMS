@@ -63,19 +63,25 @@ router.post('/add-hospital', async (req, res) => {
 
 // Route to delete a hospital by ID
 router.delete('/hospitals/:id', async (req, res) => {
+    const { id } = req.params; // Get hospital ID from the URL
     try {
-        await Hospital.findByIdAndDelete(req.params.id);
-        res.status(200).json({ message: 'Hospital deleted successfully' });
+        const result = await Hospital.findByIdAndDelete(id); // Delete hospital from the database
+        if (!result) {
+            return res.status(404).json({ message: 'Hospital not found.' });
+        }
+        res.json({ message: 'Hospital deleted successfully.' });
     } catch (error) {
         console.error('Error deleting hospital:', error);
-        res.status(500).json({ message: 'Error deleting hospital' });
+        res.status(500).json({ message: 'Error deleting hospital.' });
     }
 });
+
+module.exports = router;
 
 // Route to get the list of all doctors
 router.get('/doctors', async (req, res) => {
     try {
-        const doctors = await Doctor.find().populate('hospital', 'name');
+        const doctors = await Doctor.find();
         res.status(200).json(doctors);
     } catch (error) {
         console.error('Error fetching doctors:', error);
