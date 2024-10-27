@@ -2,16 +2,11 @@
 const mongoose = require('mongoose');
 
 const doctorSchema = new mongoose.Schema({
+    hospital: {
+        type: String,
+        required: true,
+    },
     name: {
-        type: String,
-        required: true,
-        trim: true,
-    },
-    specialty: {
-        type: String,
-        required: true,
-    },
-    phone: {
         type: String,
         required: true,
     },
@@ -19,15 +14,18 @@ const doctorSchema = new mongoose.Schema({
         type: String,
         required: true,
         unique: true,
-        trim: true,
     },
-    hospital: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Hospital',
+    password: {
+        type: String,
         required: true,
     },
-    availability: {
+    specialization: {
         type: String,
+        required: true,
+    },
+    role: {
+        type: String,
+        enum: ['patient', 'doctor', 'admin', 'hospital-admin'],
         required: true,
     },
 }, { timestamps: true });

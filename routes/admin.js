@@ -1,6 +1,8 @@
 // admin.js (Backend)
 const express = require('express');
+const bcrypt = require('bcrypt');
 const router = express.Router();
+const User = require('../models/User');
 const Hospital = require('../models/Hospital'); // Ensure you have a Hospital model
 const Doctor = require('../models/Doctor'); // Ensure you have a Doctor model
 
@@ -19,16 +21,39 @@ router.get('/hospitals', async (req, res) => {
 router.post('/add-hospital', async (req, res) => {
     const { name, admin, email, password } = req.body; // Ensure these match your form inputs
 
+    // Check if the required fields are provided
+    if (!name || !admin || !email || !password) {
+        return res.status(400).json({ message: 'All fields are required' });
+    }
+
     try {
+        // Debugging: Log the password being hashed
+        console.log('Adding hospital with password:', password); // Debugging line
+
+        // Hash the admin password
+        const hashedPassword = await bcrypt.hash(password, 10); // Hash the password with a salt rounds of 10
+        
+        // Create a new hospital instance
         const newHospital = new Hospital({
             name: name,
             admin: admin,
             email: email,
-            password: password,
-            // Email, phone, and address are optional for now
-            // You can add them later when implementing additional functionality
+            password: hashedPassword, // Ensure hashed password is stored
         });
+
         await newHospital.save();
+
+        // Create a new user in the User collection with the same credentials
+        const newUser = new User({
+            email, // Email as the unique identifier
+            password: hashedPassword,
+            role: 'hospital-admin',
+        });
+
+        await newUser.save();
+
+        // Log the new hospital object
+        console.log('New Hospital Created:', newHospital);
         res.status(201).json({ message: 'Hospital added successfully!' });
     } catch (error) {
         console.error('Error adding hospital:', error);

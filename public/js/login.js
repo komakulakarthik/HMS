@@ -1,39 +1,48 @@
 // login.js
-document.addEventListener('DOMContentLoaded', function () {
-    const loginForm = document.getElementById('login-form');
-    const usernameInput = document.getElementById('username');
-    const passwordInput = document.getElementById('password');
-    const roleInput = document.getElementById('role');
 
-    loginForm.addEventListener('submit', async function (event) {
-        event.preventDefault(); // Prevent default form submission
+document.getElementById('login-form').addEventListener('submit', async function (event) {
+    event.preventDefault(); // Prevent the default form submission
 
-        // Gather data to send
-        const formData = {
-            username: usernameInput.value,
-            password: passwordInput.value,
-            role: roleInput.value,
-        };
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const role = document.getElementById('role').value;
 
-        try {
-            const response = await fetch('http://localhost:3000/api/patients/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
-            });
+    try {
+        const response = await fetch('/api/auth/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email, password, role }),
+        });
 
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.message || 'Login failed');
-            }
-
-            // Redirect to the patient dashboard after successful login
-            window.location.href = 'patient.html';
-
-        } catch (error) {
-            alert(error.message || 'An error occurred while logging in.');
+        if (!response.ok) {
+            throw new Error('Login failed. Please check your credentials.');
         }
-    });
+
+        const data = await response.json();
+
+        // Save the user info in local storage or session storage
+        localStorage.setItem('user', JSON.stringify(data.user)); // Example of storing user info
+
+        // Redirect based on role
+        switch (role) {
+            case 'patient':
+                window.location.href = 'patient.html'; // Redirect to patient dashboard
+                break;
+            case 'doctor':
+                window.location.href = 'doctor.html'; // Redirect to doctor dashboard (if you have one)
+                break;
+            case 'admin':
+                window.location.href = 'admin.html'; // Redirect to admin dashboard
+                break;
+            case 'hospital-admin':
+                window.location.href = 'hospital-admin.html'; // Redirect to hospital admin dashboard
+                break;
+            default:
+                throw new Error('Invalid role selected.');
+        }
+    } catch (error) {
+        alert(error.message);
+    }
 });

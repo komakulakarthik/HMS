@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - Hospital Connect</title>
-    <link rel="stylesheet" href="/public/css/admin.css"> <!-- Link to CSS -->
-    <script defer src="/js/admin.js"></script> <!-- Link to JavaScript -->
+    <link rel="stylesheet" href="/css/admin.css"> <!-- Link to CSS -->
+    <script defer src="/js/hospital-admin.js"></script> <!-- Link to JavaScript -->
 </head>
 <body>
     <div class="container">
@@ -43,12 +43,16 @@
     <h3>Add Doctor</h3>
     <form id="add-doctor-form">
         <div class="form-group">
-            <label for="doctor-name">Doctor Name:</label>
-            <input type="text" id="doctor-name" required>
+            <label for="hospital">Hospital Name:</label>
+            <input type="text" id="hospital" required>
         </div>
         <div class="form-group">
-            <label for="doctor-username">Username:</label>
-            <input type="text" id="doctor-username" required>
+            <label for="name">Doctor Name:</label>
+            <input type="text" id="name" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="text" id="email" required>
         </div>
         <div class="form-group">
             <label for="doctor-password">Password:</label>

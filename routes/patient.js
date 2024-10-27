@@ -3,6 +3,7 @@ const express = require('express');
 const bcrypt = require('bcrypt'); // For password hashing
 const router = express.Router();
 const Patient = require('../models/patient'); // Adjust the path if needed
+const User = require('../models/User');
 
 // Patient registration route
 router.post('/register', async (req, res) => {
@@ -32,6 +33,15 @@ router.post('/register', async (req, res) => {
         // Save the new patient to the database
         await newPatient.save();
 
+        // Create a new user in the User collection with the same credentials
+        const newUser = new User({
+            email, // Email as the unique identifier
+            password: hashedPassword,
+            role: 'patient',
+        });
+
+        await newUser.save();
+
         // Send success response
         res.status(201).json({ message: 'Patient registered successfully' });
     } catch (error) {
@@ -39,29 +49,4 @@ router.post('/register', async (req, res) => {
         res.status(500).json({ message: 'Error registering patient' });
     }
 });
-
-// In patient.js or relevant route file
-router.post('/login', async (req, res) => {
-    const { username, password, role } = req.body;
-
-    try {
-        const user = await Patient.findOne({ email: username }); // Adjust based on your schema
-        if (!user) {
-            return res.status(401).json({ message: 'Invalid credentials' });
-        }
-
-        const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) {
-            return res.status(401).json({ message: 'Invalid credentials' });
-        }
-
-        // Send JSON success response
-        res.status(200).json({ message: 'Login successful' });
-    } catch (error) {
-        console.error('Error during login:', error);
-        res.status(500).json({ message: 'Server error' });
-    }
-});
-
-
 module.exports = router;

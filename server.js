@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const cors = require('cors');
+const bodyParser = require('body-parser');
 const path = require('path');
 dotenv.config();
 
@@ -17,10 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public'))); 
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-}).then(() => console.log('MongoDB connected successfully'))
+mongoose.connect(process.env.MONGO_URI, {}).then(() => console.log('MongoDB connected successfully'))
   .catch(error => console.log('Error connecting to MongoDB:', error));
 
 // Import Routes
@@ -29,6 +27,10 @@ const patientRoutes = require('./routes/patient');
 const appointmentRoutes = require('./routes/appointment');
 const authRoutes = require('./routes/auth');
 const adminRoutes = require('./routes/admin');
+const hospitaladminRoutes = require('./routes/hospital-admin'); // Add at the top
+
+app.use('/api/admin', adminRoutes); // Include the route
+
 
 // Use Routes
 app.use('/api/hospitals', hospitalRoutes);
@@ -36,6 +38,7 @@ app.use('/api/patients', patientRoutes);
 app.use('/api/appointments', appointmentRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/hospital-admin', hospitaladminRoutes);
 
 // Home route
 app.get('/', (req, res) => {
