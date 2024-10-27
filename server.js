@@ -1,18 +1,25 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
-dotenv.config(); // Load environment variables
+const cors = require('cors');
+const path = require('path');
+dotenv.config();
 
 const app = express();
 
 // Middleware
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true })); // URL-encoded parser
-app.use(express.static('public')); // Serve static files
+app.use(cors({
+    origin: 'http://localhost:3000',
+    credentials: true,
+}));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true })); 
+app.use(express.static(path.join(__dirname, 'public'))); 
 
-// Connect to MongoDB using environment variable
+// Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
 }).then(() => console.log('MongoDB connected successfully'))
   .catch(error => console.log('Error connecting to MongoDB:', error));
 
@@ -21,27 +28,21 @@ const hospitalRoutes = require('./routes/hospital');
 const patientRoutes = require('./routes/patient');
 const appointmentRoutes = require('./routes/appointment');
 const authRoutes = require('./routes/auth');
+const adminRoutes = require('./routes/admin');
 
 // Use Routes
 app.use('/api/hospitals', hospitalRoutes);
 app.use('/api/patients', patientRoutes);
 app.use('/api/appointments', appointmentRoutes);
 app.use('/api/auth', authRoutes);
-
-const cors = require('cors');
-
-app.use(cors({
-    origin: 'http://localhost:3000',  // Allow requests from this origin
-    credentials: true,  // If using cookies, set this to true
-}));
-
+app.use('/api/admin', adminRoutes);
 
 // Home route
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/public/index.html');
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// Start server using PORT from environment variable
+// Start server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

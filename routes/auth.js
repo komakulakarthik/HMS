@@ -14,6 +14,19 @@ router.post('/register', async (req, res) => {
     }
 });
 
+router.post('/add-hospital', async (req, res) => {
+    const { name, admin, password } = req.body;
+    try {
+        const newHospital = new Hospital({ name, admin, password });
+        await newHospital.save();
+        res.status(201).json({ message: 'Hospital added successfully' });
+    } catch (error) {
+        console.error('Error adding hospital:', error);
+        res.status(500).json({ message: 'Error adding hospital' });
+    }
+});
+
+
 // User login
 router.post('/login', async (req, res) => {
     try {

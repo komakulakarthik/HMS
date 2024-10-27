@@ -1,0 +1,76 @@
+// admin.js
+const express = require('express');
+const router = express.Router();
+const Hospital = require('../models/Hospital'); // Ensure you have a Hospital model
+const Doctor = require('../models/Doctor'); // Ensure you have a Doctor model
+
+// Route to add a new hospital
+router.post('/add-hospital', async (req, res) => {
+    const { name, admin, password } = req.body;
+
+    try {
+        const newHospital = new Hospital({
+            name,
+            admin,
+            password
+        });
+        await newHospital.save();
+        res.status(201).json({ message: 'Hospital added successfully!' });
+    } catch (error) {
+        console.error('Error adding hospital:', error);
+        res.status(500).json({ message: 'Error adding hospital. Please try again.' });
+    }
+});
+
+// Route to add a new hospital
+router.post('/add-hospital', async (req, res) => {
+    const { name, admin, password } = req.body; // Ensure these match your form inputs
+
+    try {
+        const newHospital = new Hospital({
+            name: name,
+            admin: admin,
+            password: password // Consider hashing this password before saving for security
+        });
+        await newHospital.save();
+        res.status(201).json({ message: 'Hospital added successfully!' });
+    } catch (error) {
+        console.error('Error adding hospital:', error);
+        res.status(500).json({ message: 'Error adding hospital. Please try again.' });
+    }
+});
+
+// Route to delete a hospital by ID
+router.delete('/hospitals/:id', async (req, res) => {
+    try {
+        await Hospital.findByIdAndDelete(req.params.id);
+        res.status(200).json({ message: 'Hospital deleted successfully' });
+    } catch (error) {
+        console.error('Error deleting hospital:', error);
+        res.status(500).json({ message: 'Error deleting hospital' });
+    }
+});
+
+// Route to get the list of all doctors
+router.get('/doctors', async (req, res) => {
+    try {
+        const doctors = await Doctor.find().populate('hospital', 'name');
+        res.status(200).json(doctors);
+    } catch (error) {
+        console.error('Error fetching doctors:', error);
+        res.status(500).json({ message: 'Error fetching doctors' });
+    }
+});
+
+// Route to delete a doctor by ID
+router.delete('/doctors/:id', async (req, res) => {
+    try {
+        await Doctor.findByIdAndDelete(req.params.id);
+        res.status(200).json({ message: 'Doctor deleted successfully' });
+    } catch (error) {
+        console.error('Error deleting doctor:', error);
+        res.status(500).json({ message: 'Error deleting doctor' });
+    }
+});
+
+module.exports = router;
