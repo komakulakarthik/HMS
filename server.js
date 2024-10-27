@@ -29,8 +29,6 @@ const authRoutes = require('./routes/auth');
 const adminRoutes = require('./routes/admin');
 const hospitaladminRoutes = require('./routes/hospital-admin'); // Add at the top
 
-app.use('/api/admin', adminRoutes); // Include the route
-
 
 // Use Routes
 app.use('/api/hospitals', hospitalRoutes);

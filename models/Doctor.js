@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const doctorSchema = new mongoose.Schema({
     hospital: {
         type: String,
+        ref: 'Hospital', // Reference to the Hospital model
         required: true,
     },
     name: {
