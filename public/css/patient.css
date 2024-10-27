@@ -104,3 +104,26 @@ footer {
     color: #555;
     font-size: 0.9rem;
 }
+#appointments-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    background-color: #1E1E1E;
+    color: #E0E0E0;
+}
+
+#appointments-table th,
+#appointments-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #333;
+}
+
+#appointments-table th {
+    background-color: #333;
+    color: #FFF;
+}
+
+#appointments-table tr:hover {
+    background-color: #333; /* Highlight row on hover */
+}
