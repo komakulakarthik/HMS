@@ -5,7 +5,7 @@ const router = express.Router();
 const User = require('../models/User');
 const Hospital = require('../models/Hospital'); // Ensure you have a Hospital model
 const Doctor = require('../models/Doctor'); // Ensure you have a Doctor model
-
+const hospitalController = require('../controllers/hospitalController');
 // Route to get the list of all hospitals
 router.get('/hospitals', async (req, res) => {
     try {
@@ -17,49 +17,9 @@ router.get('/hospitals', async (req, res) => {
     }
 });
 
-// Route to add a new hospital
-router.post('/add-hospital', async (req, res) => {
-    const { name, admin, email, password } = req.body; // Ensure these match your form inputs
+// Route for adding a new hospital
+router.post('/add-hospital', hospitalController.addHospital);
 
-    // Check if the required fields are provided
-    if (!name || !admin || !email || !password) {
-        return res.status(400).json({ message: 'All fields are required' });
-    }
-
-    try {
-        // Debugging: Log the password being hashed
-        console.log('Adding hospital with password:', password); // Debugging line
-
-        // Hash the admin password
-        const hashedPassword = await bcrypt.hash(password, 10); // Hash the password with a salt rounds of 10
-        
-        // Create a new hospital instance
-        const newHospital = new Hospital({
-            name: name,
-            admin: admin,
-            email: email,
-            password: hashedPassword, // Ensure hashed password is stored
-        });
-
-        await newHospital.save();
-
-        // Create a new user in the User collection with the same credentials
-        const newUser = new User({
-            email, // Email as the unique identifier
-            password: hashedPassword,
-            role: 'hospital-admin',
-        });
-
-        await newUser.save();
-
-        // Log the new hospital object
-        console.log('New Hospital Created:', newHospital);
-        res.status(201).json({ message: 'Hospital added successfully!' });
-    } catch (error) {
-        console.error('Error adding hospital:', error);
-        res.status(500).json({ message: 'Error adding hospital. Please try again.' });
-    }
-});
 
 // Route to delete a hospital by ID
 router.delete('/hospitals/:id', async (req, res) => {

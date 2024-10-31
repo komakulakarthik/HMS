@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 
 const doctorSchema = new mongoose.Schema({
     hospital: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId, // Reference by ObjectId
         ref: 'Hospital', // Reference to the Hospital model
         required: true,
     },
@@ -26,8 +26,10 @@ const doctorSchema = new mongoose.Schema({
     },
     role: {
         type: String,
-        enum: ['patient', 'doctor', 'admin', 'hospital-admin'],
+        enum: ['doctor'],
+        default: 'doctor', // Default to 'doctor' for this model
         required: true,
     },
 }, { timestamps: true });
+
 module.exports = mongoose.models.Doctor || mongoose.model('Doctor', doctorSchema);

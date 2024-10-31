@@ -1,11 +1,27 @@
-// routes/admin.js
+// routes/hospital-admin.js
 
 const express = require('express');
 const bcrypt = require('bcrypt');
 const router = express.Router();
-const Hospital = require('../models/Hospital')
+const doctorController = require('../controllers/doctorController');
+const Hospital = require('../models/Hospital');
 const User = require('../models/User');
-const Doctor = require('../models/Doctor'); // Ensure you have a Doctor model
+const Doctor = require('../models/Doctor');
+const hospitalController = require('../controllers/hospitalController');
+const authMiddleware = require('../middleware/authMiddleware');
+
+
+// Route to get hospital info
+router.get('/hospital-info', (req, res, next) => {
+    console.log('Received request for hospital info in hospital-admin.js');
+    next();
+}, authMiddleware, hospitalController.getHospitalInfo);
+
+// Route to add a new doctor
+router.post('/add-doctor', doctorController.addDoctor);
+
+// Route to get doctors by hospital ID
+router.get('/doctors/:hospitalId', doctorController.getDoctorsByHospital);
 
 // Route to get the list of all doctors
 router.get('/doctors', async (req, res) => {
@@ -15,46 +31,6 @@ router.get('/doctors', async (req, res) => {
     } catch (error) {
         console.error('Error fetching doctors:', error);
         res.status(500).json({ message: 'Error fetching doctors' });
-    }
-});
-
-// Route to add a new doctor
-router.post('/add-doctor', async (req, res) => {
-    const {hospital, name, email, password, specialization } = req.body;
-
-    if (!hospital || !name || !email || !password || !specialization) {
-        return res.status(400).json({ message: 'All fields are required' });
-    }
-
-    try {
-        const hashedPassword = await bcrypt.hash(password, 10);
-        const newDoctor = new Doctor({
-            hospital,
-            name,
-            email,
-            password: hashedPassword,
-            specialization,
-            role: 'doctor',
-        });
-
-        await newDoctor.save();
-
-        // Create a new user in the User collection with the same credentials
-        const newUser = new User({
-            email, // Email as the unique identifier
-            password: hashedPassword,
-            role: 'doctor',
-        });
-
-        await newUser.save();
-
-         // Update the hospital to include the new doctor's ID
-         await Hospital.findByIdAndUpdate(hospitalId, { $push: { doctors: newDoctor._id } });
-
-        res.status(201).json({ message: 'Doctor added successfully!' });
-    } catch (error) {
-        console.error('Error adding doctor:', error);
-        res.status(500).json({ message: 'Error adding doctor' });
     }
 });
 

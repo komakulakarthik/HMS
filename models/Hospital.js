@@ -21,8 +21,13 @@ const hospitalSchema = new mongoose.Schema({
         trim: true,
         required: true, // Made optional
     },
-    admin: { // New field for hospital admin
+    admin: {
         type: String,
+        required: true,
+    },
+    admin_id: { // New field for hospital admin
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User', // Reference to the User model if applicable
         required: true, // Change as necessary
     },
     password: { // New field for admin password

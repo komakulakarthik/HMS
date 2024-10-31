@@ -1,8 +1,11 @@
 const express = require('express');
 const router = express.Router();
+const authController = require('../controllers/authController');
 const User = require('../models/User'); // Ensure you have a User model
 const bcrypt = require('bcrypt'); // For password hashing
 const jwt = require('jsonwebtoken'); // For token generation
+
+
 
 // Route to handle user registration
 router.post('/register', async (req, res) => {
@@ -34,31 +37,7 @@ router.post('/register', async (req, res) => {
     }
 });
 
-// Route to handle login
-router.post('/login', async (req, res) => {
-    const { email, password, role } = req.body; // username is the email
-
-    try {
-        const user = await User.findOne({ email: email }); // Find user by email
-        if (!user) {
-            return res.status(401).json({ message: 'Invalid email' });
-        }
-
-        // Compare passwords
-        const isMatch = await bcrypt.compare(password, user.password); // Compare hashed password
-        if (!isMatch) {
-            return res.status(401).json({ message: 'Invalid or password' });
-        }
-
-        // Generate a token (optional)
-        const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
-
-        res.status(200).json({ message: 'Login successful', token }); // Send token if needed
-    } catch (error) {
-        console.error('Error logging in:', error);
-        res.status(500).json({ message: 'Error logging in. Please try again.' });
-    }
-});
+router.post('/login', authController.login);
 
 // Route to handle logout (if needed)
 router.post('/logout', (req, res) => {

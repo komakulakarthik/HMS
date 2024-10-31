@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hospital Admin Dashboard</title>
+    <title id="hospital-title">Hospital Admin</title>
     <link rel="stylesheet" href="/css/admin.css"> <!-- Link to CSS -->
     <script defer src="/js/hospital-admin.js"></script> <!-- Link to JavaScript -->
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>Admin Dashboard</h1>
+            <h1><span id="hospital-name-header"></span></h1>
             <nav>
                 <ul class="nav-menu">
                     <li><a href="admin.html">Dashboard</a></li>
@@ -43,10 +43,6 @@
     <h3>Add Doctor</h3>
     <form id="add-doctor-form">
         <div class="form-group">
-            <label for="hospital">Hospital Name:</label>
-            <input type="text" id="hospital" required>
-        </div>
-        <div class="form-group">
             <label for="name">Doctor Name:</label>
             <input type="text" id="name" required>
         </div>
@@ -62,6 +58,9 @@
             <label for="specialization">Specialization:</label>
             <input type="text" id="specialization" required>
         </div>
+
+        <!-- Hidden Hospital Name Input -->
+        <input type="hidden" id="hospital-id" value="">
         
         <button type="submit">Add Doctor</button>
     </form>
