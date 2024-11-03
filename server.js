@@ -19,7 +19,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(session({
   secret: 'karthik_the_bot_of_bots', // Change to your secret key
   resave: false,
-  saveUninitialized: true,
+  saveUninitialized: false,
   cookie: { secure: false } // Set secure: true only if using HTTPS
 }));
 

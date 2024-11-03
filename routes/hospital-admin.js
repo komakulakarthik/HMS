@@ -21,18 +21,7 @@ router.get('/hospital-info', (req, res, next) => {
 router.post('/add-doctor', doctorController.addDoctor);
 
 // Route to get doctors by hospital ID
-router.get('/doctors/:hospitalId', doctorController.getDoctorsByHospital);
-
-// Route to get the list of all doctors
-router.get('/doctors', async (req, res) => {
-    try {
-        const doctors = await Doctor.find();
-        res.status(200).json(doctors);
-    } catch (error) {
-        console.error('Error fetching doctors:', error);
-        res.status(500).json({ message: 'Error fetching doctors' });
-    }
-});
+router.get('/doctors/:hospitalId',  authMiddleware, doctorController.getDoctorsByHospital);
 
 // Route to delete a doctor by ID
 router.delete('/doctors/:id', async (req, res) => {

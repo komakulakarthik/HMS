@@ -6,9 +6,9 @@ const bcrypt = require('bcrypt');
 // Fetch doctors for a specific hospital
 exports.getDoctorsByHospital = async (req, res) => {
     try {
-        const hospitalId = req.session.hospitalId;
+        const hospitalId = req.session.adminId;
         if (!hospitalId) {
-            return res.status(401).json({ error: 'Unauthorized access' });
+            return res.status(401).json({ error: 'Unauthorized access in controller' });
         }
 
         const doctors = await Doctor.find({ hospital: hospitalId });
