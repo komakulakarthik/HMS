@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', function () {
         };
 
         try {
-            const response = await fetch('api/patients/register', {
+            const response = await fetch('api/patient/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
