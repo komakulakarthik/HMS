@@ -82,6 +82,11 @@ router.get('/hospitals/:hospitalId/doctors', async (req, res) => {
 // Book an appointment
 router.post('/book-appointment', async (req, res) => {
     const { hospital, doctor, reason, date, time } = req.body;
+    
+    if (!req.session.userId) {
+        return res.status(401).json({ message: 'Unauthorized: Please log in to book an appointment.' });
+    }
+
     try {
         const newAppointment = new Appointment({
             hospital,
@@ -89,7 +94,7 @@ router.post('/book-appointment', async (req, res) => {
             reason,
             date,
             time,
-            patient: req.user._id, // Assuming you're using JWT or similar for authentication
+            patient: req.session.userId, // Use the userId from the session
         });
 
         await newAppointment.save();
@@ -103,7 +108,7 @@ router.post('/book-appointment', async (req, res) => {
 // Fetch appointments for a patient
 router.get('/appointments', async (req, res) => {
     try {
-        const appointments = await Appointment.find({ patient: req.user._id }) // Fetch appointments for the logged-in patient
+        const appointments = await Appointment.find({ patient: req.session.user._id }) // Fetch appointments for the logged-in patient
             .populate('hospital') // Adjust based on your schema
             .populate('doctor'); // Adjust based on your schema
         res.json(appointments);

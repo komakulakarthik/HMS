@@ -53,6 +53,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Call fetchHospitals on page load
     fetchHospitals();
+    fetchAppointments();
 
 // Handle appointment booking
 document.getElementById('appointment-form').addEventListener('submit', async (e) => {
@@ -76,16 +77,12 @@ document.getElementById('appointment-form').addEventListener('submit', async (e)
         });
 
         const data = await response.json();
-        const confirmationMessage = document.getElementById('confirmation-message');
+        confirmationMessage.textContent = response.ok ? 'Appointment booked successfully!' : data.message;
+        confirmationMessage.style.display = 'block';
 
         if (response.ok) {
-            confirmationMessage.textContent = 'Appointment booked successfully!';
-            confirmationMessage.style.display = 'block';
             document.getElementById('appointment-form').reset(); // Reset form
             fetchAppointments(); // Refresh booked appointments
-        } else {
-            confirmationMessage.textContent = data.message;
-            confirmationMessage.style.display = 'block';
         }
     } catch (error) {
         console.error('Error booking appointment:', error);
@@ -105,9 +102,9 @@ async function fetchAppointments() {
             const row = appointmentsTableBody.insertRow();
             row.insertCell(0).textContent = appointment.date;
             row.insertCell(1).textContent = appointment.time;
-            row.insertCell(2).textContent = appointment.hospital;
-            row.insertCell(3).textContent = appointment.doctor;
-            row.insertCell(4).textContent = appointment.specialty;
+            row.insertCell(2).textContent = appointment.hospital.name;
+            row.insertCell(3).textContent = appointment.doctor.name;
+            row.insertCell(4).textContent = appointment.doctor.specialization;
         });
     } catch (error) {
         console.error('Error fetching appointments:', error);

@@ -35,6 +35,7 @@ exports.login = async (req, res) => {
             req.session.adminId = hospital._id;
         }
 
+        req.session.userId = user._id;
         // Set user info in session
         req.session.user = {
             _id: user._id,
