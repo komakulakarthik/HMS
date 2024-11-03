@@ -4,6 +4,9 @@ const bcrypt = require('bcrypt'); // For password hashing
 const router = express.Router();
 const Patient = require('../models/patient'); // Adjust the path if needed
 const User = require('../models/User');
+const Hospital = require('../models/Hospital');
+const Doctor = require('../models/Doctor');
+const Appointment = require('../models/Appointment');
 
 // Patient registration route
 router.post('/register', async (req, res) => {
@@ -64,7 +67,11 @@ router.get('/hospitals', async (req, res) => {
 // Get doctors for a specific hospital
 router.get('/hospitals/:hospitalId/doctors', async (req, res) => {
     try {
-        const doctors = await Doctor.find({ hospital: req.params.hospitalId });
+        const hospitalId = req.params.hospitalId;
+        const doctors = await Doctor.find({ hospital: hospitalId });
+        if (doctors.length === 0) {
+            return res.json({ message: 'No doctor is available for appointments' });
+        }
         res.json(doctors);
     } catch (error) {
         console.error('Error fetching doctors:', error);
@@ -73,7 +80,7 @@ router.get('/hospitals/:hospitalId/doctors', async (req, res) => {
 });
 
 // Book an appointment
-router.post('/patients/book-appointment', async (req, res) => {
+router.post('/book-appointment', async (req, res) => {
     const { hospital, doctor, reason, date, time } = req.body;
     try {
         const newAppointment = new Appointment({
@@ -94,7 +101,7 @@ router.post('/patients/book-appointment', async (req, res) => {
 });
 
 // Fetch appointments for a patient
-router.get('/patients/appointments', async (req, res) => {
+router.get('/appointments', async (req, res) => {
     try {
         const appointments = await Appointment.find({ patient: req.user._id }) // Fetch appointments for the logged-in patient
             .populate('hospital') // Adjust based on your schema

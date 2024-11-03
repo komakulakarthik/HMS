@@ -43,10 +43,11 @@ const authRoutes = require('./routes/auth');
 const adminRoutes = require('./routes/admin');
 
 // Use Routes
-app.use('/api/patients', patientRoutes);
+app.use('/api/patient', patientRoutes);
 app.use('/api/appointments', appointmentRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('./routes/hospital', hospitalRoutes);
 
 // Home route
 app.get('/', (req, res) => {

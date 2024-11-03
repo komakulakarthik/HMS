@@ -1,55 +1,58 @@
 // patient.js (Frontend)
 
-document.addEventListener('DOMContentLoaded', () => {
-    fetchHospitals(); // Load hospitals when the page loads
-    fetchAppointments(); // Load booked appointments when the page loads
-});
-
-// Fetch available hospitals from the backend
-async function fetchHospitals() {
-    try {
-        const response = await fetch('/api/admin/hospitals'); // Replace with your actual API endpoint
-        const hospitals = await response.json();
-
-        const hospitalSelect = document.getElementById('hospital');
-        hospitals.forEach(hospital => {
-            const option = document.createElement('option');
-            option.value = hospital._id; // Use hospital ID for submission
-            option.textContent = hospital.name; // Display hospital name
-            hospitalSelect.appendChild(option);
-        });
-
-        // Add event listener to fetch doctors when a hospital is selected
-        hospitalSelect.addEventListener('change', fetchDoctors);
-    } catch (error) {
-        console.error('Error fetching hospitals:', error);
-    }
-}
-
-// Fetch doctors based on the selected hospital
-async function fetchDoctors() {
-    const hospitalId = document.getElementById('hospital').value;
+document.addEventListener('DOMContentLoaded', async () => {
+    const hospitalSelect = document.getElementById('hospital');
     const doctorSelect = document.getElementById('doctor');
-    
-    // Clear existing options
-    doctorSelect.innerHTML = '<option value="" disabled selected>Select a doctor</option>';
+    const confirmationMessage = document.getElementById('confirmation-message');
 
-    if (!hospitalId) return;
+    // Fetch and display hospitals in the dropdown
+    async function fetchHospitals() {
+        try {
+            const response = await fetch('/api/patient/hospitals');
+            const hospitals = await response.json();
+            console.log('Fetching hospitals');
 
-    try {
-        const response = await fetch(`/api/hospital-admin/hospitals/${hospitalId}/doctors`); // Adjust the endpoint as necessary
-        const doctors = await response.json();
-
-        doctors.forEach(doctor => {
-            const option = document.createElement('option');
-            option.value = doctor._id; // Use doctor ID for submission
-            option.textContent = `${doctor.name} (${doctor.specialization})`; // Display doctor name and specialization
-            doctorSelect.appendChild(option);
-        });
-    } catch (error) {
-        console.error('Error fetching doctors:', error);
+            hospitals.forEach(hospital => {
+                const option = document.createElement('option');
+                option.value = hospital._id;
+                option.textContent = hospital.name;
+                hospitalSelect.appendChild(option);
+            });
+        } catch (error) {
+            console.error('Error fetching hospitals:', error);
+        }
     }
-}
+
+    // Fetch and display doctors based on selected hospital
+    hospitalSelect.addEventListener('change', async () => {
+        const hospitalId = hospitalSelect.value;
+        doctorSelect.innerHTML = '<option value="" disabled selected>Select a doctor</option>'; // Reset doctor list
+
+        try {
+            const response = await fetch(`/api/patient/hospitals/${hospitalId}/doctors`);
+            const doctors = await response.json();
+
+            if (doctors.length === 0) {
+                const option = document.createElement('option');
+                option.value = '';
+                option.textContent = 'No doctor is available for appointments';
+                option.disabled = true;
+                doctorSelect.appendChild(option);
+            } else {
+                doctors.forEach(doctor => {
+                    const option = document.createElement('option');
+                    option.value = doctor._id;
+                    option.textContent = `${doctor.name} - ${doctor.specialization}`;
+                    doctorSelect.appendChild(option);
+                });
+            }
+        } catch (error) {
+            console.error('Error fetching doctors:', error);
+        }
+    });
+
+    // Call fetchHospitals on page load
+    fetchHospitals();
 
 // Handle appointment booking
 document.getElementById('appointment-form').addEventListener('submit', async (e) => {
@@ -64,7 +67,7 @@ document.getElementById('appointment-form').addEventListener('submit', async (e)
     };
 
     try {
-        const response = await fetch('/api/patients/book-appointment', {
+        const response = await fetch('/api/patient/book-appointment', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -92,7 +95,7 @@ document.getElementById('appointment-form').addEventListener('submit', async (e)
 // Fetch booked appointments for the patient
 async function fetchAppointments() {
     try {
-        const response = await fetch('/api/patients/appointments'); // Replace with your actual API endpoint
+        const response = await fetch('/api/patient/appointments'); // Replace with your actual API endpoint
         const appointments = await response.json();
 
         const appointmentsTableBody = document.getElementById('appointments-table').getElementsByTagName('tbody')[0];
@@ -110,3 +113,5 @@ async function fetchAppointments() {
         console.error('Error fetching appointments:', error);
     }
 }
+
+});
